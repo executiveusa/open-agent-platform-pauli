@@ -1,0 +1,7 @@
+{
+  "layout": {
+    "hero": "whatsapp_control",
+    "tabs": ["Inbox", "Runs", "Templates"]
+  },
+  "quick_actions": ["send_broadcast", "reply_faster"]
+}

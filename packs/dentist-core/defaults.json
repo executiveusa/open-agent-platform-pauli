@@ -1,0 +1,7 @@
+{
+  "layout": {
+    "hero": "dentist_overview",
+    "tabs": ["Dashboard", "Runs", "Insights", "Compliance"]
+  },
+  "quick_actions": ["create_campaign", "send_followup", "weekly_report"]
+}

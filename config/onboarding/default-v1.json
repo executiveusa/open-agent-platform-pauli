@@ -1,0 +1,91 @@
+{
+  "id": "default-v1",
+  "min_stage_fields": ["industry", "primary_goal", "primary_channel"],
+  "stages": [
+    {
+      "id": "identity",
+      "questions": [
+        {
+          "id": "business_name",
+          "type": "text",
+          "required": true,
+          "prompt": {
+            "it-IT": "Come si chiama la tua attivita?",
+            "es-MX": "Como se llama tu negocio?",
+            "es": "Como se llama tu negocio?",
+            "en": "What is your business called?"
+          }
+        },
+        {
+          "id": "city",
+          "type": "text",
+          "required": true,
+          "default": "Seattle",
+          "prompt": {
+            "it-IT": "In quale citta operi?",
+            "es-MX": "En que ciudad operas?",
+            "es": "En que ciudad operas?",
+            "en": "Which city do you operate in?"
+          }
+        },
+        {
+          "id": "industry",
+          "type": "choice",
+          "required": true,
+          "choices": ["dentist", "real_estate", "fitness", "retail"],
+          "prompt": {
+            "it-IT": "Qual e il tuo settore?",
+            "es-MX": "Cual es tu industria?",
+            "es": "Cual es tu industria?",
+            "en": "What industry are you in?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "goals",
+      "questions": [
+        {
+          "id": "primary_goal",
+          "type": "choice",
+          "required": true,
+          "choices": ["leads", "bookings", "sales", "brand"],
+          "prompt": {
+            "it-IT": "Qual e il tuo obiettivo principale?",
+            "es-MX": "Cual es tu objetivo principal?",
+            "es": "Cual es tu objetivo principal?",
+            "en": "What is your primary goal?"
+          }
+        },
+        {
+          "id": "constraints",
+          "type": "multi",
+          "required": false,
+          "prompt": {
+            "it-IT": "Ci sono vincoli importanti?",
+            "es-MX": "Hay restricciones importantes?",
+            "es": "Hay restricciones importantes?",
+            "en": "Any important constraints?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "channels",
+      "questions": [
+        {
+          "id": "primary_channel",
+          "type": "choice",
+          "required": true,
+          "choices": ["whatsapp", "instagram", "tiktok", "youtube"],
+          "prompt": {
+            "it-IT": "Qual e il canale principale?",
+            "es-MX": "Cual es tu canal principal?",
+            "es": "Cual es tu canal principal?",
+            "en": "What is your primary channel?"
+          }
+        }
+      ]
+    }
+  ]
+}

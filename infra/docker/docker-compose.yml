@@ -1,0 +1,93 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: oap
+      POSTGRES_PASSWORD: oap
+      POSTGRES_DB: oap
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  temporal:
+    image: temporalio/auto-setup:1.24
+    restart: unless-stopped
+    environment:
+      DB: postgresql
+      DB_PORT: 5432
+      POSTGRES_USER: oap
+      POSTGRES_PWD: oap
+      POSTGRES_SEEDS: postgres
+    ports:
+      - "7233:7233"
+    depends_on:
+      - postgres
+
+  temporal-ui:
+    image: temporalio/ui:2.25.0
+    restart: unless-stopped
+    environment:
+      TEMPORAL_ADDRESS: temporal:7233
+    ports:
+      - "8080:8080"
+    depends_on:
+      - temporal
+
+  langfuse:
+    image: langfuse/langfuse:2
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://oap:oap@postgres:5432/oap
+      NEXTAUTH_SECRET: change-me
+      SALT: change-me
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+
+  api:
+    build:
+      context: ../../services/api
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+psycopg://oap:oap@postgres:5432/oap
+      REDIS_URL: redis://redis:6379/0
+      API_TOKEN: ${API_TOKEN}
+      RUN_TOKEN_SECRET: ${RUN_TOKEN_SECRET}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+
+  worker:
+    build:
+      context: ../../services/worker
+    restart: unless-stopped
+    environment:
+      API_URL: http://api:8000
+      TEMPORAL_ADDRESS: temporal:7233
+    depends_on:
+      - api
+      - temporal
+
+  runner:
+    build:
+      context: ../../services/runner
+    restart: unless-stopped
+    ports:
+      - "5900:5900"
+      - "6080:6080"
+
+volumes:
+  postgres_data:

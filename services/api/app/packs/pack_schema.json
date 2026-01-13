@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["id", "version", "type", "locales", "requires", "prerequisites", "provisions"],
+  "properties": {
+    "id": {"type": "string"},
+    "version": {"type": "string"},
+    "type": {"type": "string", "enum": ["industry", "goal", "channel"]},
+    "locales": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "requires": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "prerequisites": {
+      "type": "object",
+      "properties": {
+        "integrations": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "data": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      },
+      "required": ["integrations", "data"]
+    },
+    "provisions": {
+      "type": "object",
+      "properties": {
+        "tabs": {"type": "array", "items": {"type": "string"}},
+        "quick_actions": {"type": "array", "items": {"type": "string"}},
+        "default_agents": {"type": "array", "items": {"type": "string"}},
+        "default_workflows": {"type": "array", "items": {"type": "string"}}
+      },
+      "required": ["tabs", "quick_actions", "default_agents", "default_workflows"]
+    }
+  }
+}

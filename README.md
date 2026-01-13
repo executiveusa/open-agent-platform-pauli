@@ -65,3 +65,19 @@ No. All agents you intend to use with OAP must be LangGraph agents, deployed on 
 First, ensure you're using the latest version of LangGraph. If running locally, make sure you're using the latest version of the LangGraph API, and CLI packages. If deploying, make sure you've published a revision after 05/14/2025. Then, check that you have the `x_oap_ui_config` metadata set on your configurable fields. If you have, check that your configurable object is defined using LangGraph Zod (if using TypeScript), as this is required for the Open Agent Platform to recognize & render your UI fields.
 
 If it's still not working, confirm your `x_oap_ui_config` metadata has the proper fields set.
+
+## Template Packs
+
+Template Packs live under `/packs/<pack_id>` and are versioned configuration bundles.
+
+### How to add a new pack
+1. Create a new directory under `/packs/<pack_id>`.
+2. Add `pack.json`, `onboarding.json`, `defaults.json`, `workflows.json`, `policies.json`, and `copy.json`.
+3. Ensure `pack.json` validates against `services/api/app/packs/pack_schema.json`.
+
+### How provisioning works
+When onboarding reaches the minimum completion threshold, the API selects packs using a rules-first classifier, merges pack configs deterministically, snapshots the config, and emits setup SSE events.
+
+### How rollback works
+Use the org config snapshot endpoint to restore a prior snapshot:
+`POST /api/org/config/rollback` with the snapshot ID.

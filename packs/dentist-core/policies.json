@@ -1,0 +1,5 @@
+{
+  "safe_mode": true,
+  "disclaimers": ["medical_advice_not_provided"],
+  "restricted_actions": ["diagnosis", "prescription"]
+}
