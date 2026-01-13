@@ -1,0 +1,17 @@
+{
+  "id": "dentist-core",
+  "version": "1.0.0",
+  "type": "industry",
+  "locales": ["it-IT", "es-MX", "es", "en"],
+  "requires": [],
+  "prerequisites": {
+    "integrations": ["whatsapp_optional", "instagram_optional"],
+    "data": ["business_name", "city"]
+  },
+  "provisions": {
+    "tabs": ["Dashboard", "Runs", "Insights", "Compliance"],
+    "quick_actions": ["create_campaign", "send_followup", "weekly_report"],
+    "default_agents": ["scheduler_agent", "review_agent"],
+    "default_workflows": ["lead_followup", "appointment_reminders"]
+  }
+}

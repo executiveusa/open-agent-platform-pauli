@@ -1,0 +1,9 @@
+{
+  "workflows": [
+    {
+      "id": "whatsapp_followup",
+      "name": "WhatsApp follow-up",
+      "params": {"tone": "friendly"}
+    }
+  ]
+}

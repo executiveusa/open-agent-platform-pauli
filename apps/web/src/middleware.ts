@@ -1,8 +1,39 @@
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { updateSession } from "./lib/auth/middleware";
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  const response = await updateSession(request);
+  const pathname = request.nextUrl.pathname;
+  if (
+    pathname.startsWith("/welcome") ||
+    pathname.startsWith("/onboarding") ||
+    pathname.startsWith("/setup") ||
+    pathname.startsWith("/api")
+  ) {
+    return response;
+  }
+  const apiBase = process.env.OAP_API_URL ?? "http://localhost:8000";
+  const apiToken = process.env.OAP_API_TOKEN;
+  try {
+    const profileResponse = await fetch(`${apiBase}/api/org/profile`, {
+      headers: apiToken ? { "X-API-Key": apiToken } : {},
+      cache: "no-store",
+    });
+    if (profileResponse.ok) {
+      const data = (await profileResponse.json()) as {
+        onboarding_stage?: number;
+      };
+      if ((data.onboarding_stage ?? 0) < 1) {
+        const url = request.nextUrl.clone();
+        url.pathname = "/welcome";
+        return NextResponse.redirect(url);
+      }
+    }
+  } catch (_error) {
+    return response;
+  }
+  return response;
 }
 
 export const config = {

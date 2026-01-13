@@ -1,7 +1,14 @@
 "use client";
 
 import * as React from "react";
-import { Wrench, Bot, MessageCircle, Brain } from "lucide-react";
+import {
+  Wrench,
+  Bot,
+  MessageCircle,
+  Brain,
+  Activity,
+  Sparkles,
+} from "lucide-react";
 
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
@@ -12,39 +19,49 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { SiteHeader } from "./sidebar-header";
-
-// This is sample data.
-const data = {
-  navMain: [
-    {
-      title: "Chat",
-      url: "/",
-      icon: MessageCircle,
-    },
-    {
-      title: "Agents",
-      url: "/agents",
-      icon: Bot,
-    },
-    {
-      title: "Tools",
-      url: "/tools",
-      icon: Wrench,
-    },
-    // {
-    //   title: "Inbox",
-    //   url: "/inbox",
-    //   icon: Inbox,
-    // },
-    {
-      title: "RAG",
-      url: "/rag",
-      icon: Brain,
-    },
-  ],
-};
+import { useI18n } from "@/i18n/provider";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { dictionary } = useI18n();
+  const data = {
+    navMain: [
+      {
+        title: dictionary.nav.chat,
+        url: "/",
+        icon: MessageCircle,
+      },
+      {
+        title: dictionary.nav.agents,
+        url: "/agents",
+        icon: Bot,
+      },
+      {
+        title: dictionary.nav.tools,
+        url: "/tools",
+        icon: Wrench,
+      },
+      // {
+      //   title: "Inbox",
+      //   url: "/inbox",
+      //   icon: Inbox,
+      // },
+      {
+        title: dictionary.nav.rag,
+        url: "/rag",
+        icon: Brain,
+      },
+      {
+        title: dictionary.nav.runs,
+        url: "/runs",
+        icon: Activity,
+      },
+      {
+        title: dictionary.nav.jarvis,
+        url: "/jarvis",
+        icon: Sparkles,
+      },
+    ],
+  };
   return (
     <Sidebar
       collapsible="icon"

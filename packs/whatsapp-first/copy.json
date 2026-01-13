@@ -1,0 +1,18 @@
+{
+  "it-IT": {
+    "headline": "WhatsApp come canale principale",
+    "cta": "Invia un messaggio di benvenuto"
+  },
+  "es-MX": {
+    "headline": "WhatsApp como canal principal",
+    "cta": "Enviar mensaje de bienvenida"
+  },
+  "es": {
+    "headline": "WhatsApp como canal principal",
+    "cta": "Enviar mensaje de bienvenida"
+  },
+  "en": {
+    "headline": "WhatsApp-first setup",
+    "cta": "Send welcome message"
+  }
+}

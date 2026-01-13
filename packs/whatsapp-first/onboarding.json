@@ -1,0 +1,7 @@
+{
+  "overrides": {
+    "primary_channel": {
+      "default": "whatsapp"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "bookings-growth",
+  "version": "1.0.0",
+  "type": "goal",
+  "locales": ["it-IT", "es-MX", "es", "en"],
+  "requires": [],
+  "prerequisites": {
+    "integrations": ["calendar_optional"],
+    "data": ["primary_goal"]
+  },
+  "provisions": {
+    "tabs": ["Bookings", "Runs", "Insights"],
+    "quick_actions": ["boost_bookings", "follow_up_leads"],
+    "default_agents": ["scheduler_agent"],
+    "default_workflows": ["booking_pipeline"]
+  }
+}
