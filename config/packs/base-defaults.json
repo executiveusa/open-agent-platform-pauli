@@ -1,0 +1,7 @@
+{
+  "layout": {
+    "hero": "core_overview",
+    "tabs": ["Home", "Runs", "Insights"]
+  },
+  "quick_actions": ["run_agent"]
+}

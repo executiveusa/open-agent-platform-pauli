@@ -1,0 +1,4 @@
+{
+  "safe_mode": true,
+  "restricted_actions": ["spam_outreach"]
+}

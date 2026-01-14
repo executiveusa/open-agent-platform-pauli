@@ -1,0 +1,35 @@
+name: Pack Validation
+
+on:
+  pull_request:
+    paths:
+      - "packs/**"
+      - "services/api/app/packs/pack_schema.json"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install jsonschema
+      - run: python - <<"PY"
+import json
+from pathlib import Path
+from jsonschema import Draft7Validator
+
+schema = json.loads(Path("services/api/app/packs/pack_schema.json").read_text())
+validator = Draft7Validator(schema)
+errors = []
+for pack_dir in Path("packs").iterdir():
+    if not pack_dir.is_dir():
+        continue
+    pack_json = json.loads((pack_dir / "pack.json").read_text())
+    for error in validator.iter_errors(pack_json):
+        errors.append(f"{pack_dir.name}: {error.message}")
+if errors:
+    raise SystemExit("\n".join(errors))
+print("packs validated")
+PY

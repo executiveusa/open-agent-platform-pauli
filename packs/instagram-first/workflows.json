@@ -1,0 +1,9 @@
+{
+  "workflows": [
+    {
+      "id": "instagram_followup",
+      "name": "Instagram follow-up",
+      "params": {"tone": "friendly"}
+    }
+  ]
+}

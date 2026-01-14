@@ -1,0 +1,7 @@
+{
+  "overrides": {
+    "industry": {
+      "default": "agency"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "workflows": [
+    {
+      "id": "booking_pipeline",
+      "name": "Booking pipeline",
+      "params": {"channel": "email"}
+    }
+  ]
+}

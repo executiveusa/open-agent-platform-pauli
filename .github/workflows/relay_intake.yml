@@ -1,0 +1,12 @@
+name: Relay Intake
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  intake:
+    if: github.event.label.name == relay:run
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Relay intake triggered" && echo "Apply relay:planned label and checklist" 

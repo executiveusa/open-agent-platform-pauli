@@ -1,0 +1,7 @@
+{
+  "layout": {
+    "hero": "bookings_overview",
+    "tabs": ["Bookings", "Runs", "Insights"]
+  },
+  "quick_actions": ["boost_bookings", "follow_up_leads"]
+}

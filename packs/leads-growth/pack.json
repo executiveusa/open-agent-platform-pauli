@@ -1,0 +1,17 @@
+{
+  "id": "leads-growth",
+  "version": "1.0.0",
+  "type": "goal",
+  "locales": ["it-IT", "es-MX", "es", "en"],
+  "requires": [],
+  "prerequisites": {
+    "integrations": ["crm_optional"],
+    "data": ["primary_goal"]
+  },
+  "provisions": {
+    "tabs": ["Leads", "Runs", "Insights"],
+    "quick_actions": ["capture_lead", "nurture_lead"],
+    "default_agents": ["lead_agent"],
+    "default_workflows": ["lead_capture"]
+  }
+}

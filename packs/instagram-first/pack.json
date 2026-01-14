@@ -1,0 +1,17 @@
+{
+  "id": "instagram-first",
+  "version": "1.0.0",
+  "type": "channel",
+  "locales": ["it-IT", "es-MX", "es", "en"],
+  "requires": [],
+  "prerequisites": {
+    "integrations": ["instagram_optional"],
+    "data": ["primary_channel"]
+  },
+  "provisions": {
+    "tabs": ["Studio", "Runs", "Templates"],
+    "quick_actions": ["schedule_post", "reply_comments"],
+    "default_agents": ["social_agent"],
+    "default_workflows": ["instagram_followup"]
+  }
+}

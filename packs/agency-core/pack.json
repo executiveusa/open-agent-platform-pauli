@@ -1,0 +1,17 @@
+{
+  "id": "agency-core",
+  "version": "1.0.0",
+  "type": "industry",
+  "locales": ["it-IT", "es-MX", "es", "en"],
+  "requires": [],
+  "prerequisites": {
+    "integrations": ["instagram_optional"],
+    "data": ["business_name", "city"]
+  },
+  "provisions": {
+    "tabs": ["Clients", "Runs", "Insights"],
+    "quick_actions": ["create_campaign", "send_report"],
+    "default_agents": ["content_agent"],
+    "default_workflows": ["weekly_posts"]
+  }
+}

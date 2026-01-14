@@ -1,0 +1,7 @@
+{
+  "layout": {
+    "hero": "agency_overview",
+    "tabs": ["Clients", "Runs", "Insights"]
+  },
+  "quick_actions": ["create_campaign", "send_report"]
+}

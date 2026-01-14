@@ -1,0 +1,14 @@
+{
+  "workflows": [
+    {
+      "id": "lead_followup",
+      "name": "Lead follow-up",
+      "params": {"channel": "whatsapp"}
+    },
+    {
+      "id": "appointment_reminders",
+      "name": "Appointment reminders",
+      "params": {"frequency": "daily"}
+    }
+  ]
+}

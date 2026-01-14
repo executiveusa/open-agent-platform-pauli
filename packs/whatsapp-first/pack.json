@@ -1,0 +1,17 @@
+{
+  "id": "whatsapp-first",
+  "version": "1.0.0",
+  "type": "channel",
+  "locales": ["it-IT", "es-MX", "es", "en"],
+  "requires": [],
+  "prerequisites": {
+    "integrations": ["whatsapp_optional"],
+    "data": ["primary_channel"]
+  },
+  "provisions": {
+    "tabs": ["Inbox", "Runs", "Templates"],
+    "quick_actions": ["send_broadcast", "reply_faster"],
+    "default_agents": ["chat_agent"],
+    "default_workflows": ["whatsapp_followup"]
+  }
+}

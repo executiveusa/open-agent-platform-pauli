@@ -1,0 +1,9 @@
+{
+  "workflows": [
+    {
+      "id": "lead_capture",
+      "name": "Lead capture",
+      "params": {"channel": "web"}
+    }
+  ]
+}

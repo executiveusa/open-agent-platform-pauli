@@ -1,0 +1,7 @@
+{
+  "overrides": {
+    "industry": {
+      "default": "real_estate"
+    }
+  }
+}
