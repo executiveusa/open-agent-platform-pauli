@@ -17,6 +17,9 @@ class Settings(BaseModel):
     langfuse_host: str | None = os.getenv("LANGFUSE_HOST")
     langfuse_public_key: str | None = os.getenv("LANGFUSE_PUBLIC_KEY")
     langfuse_secret_key: str | None = os.getenv("LANGFUSE_SECRET_KEY")
+    disable_agent_runs: bool = os.getenv("DISABLE_AGENT_RUNS", "false").lower() == "true"
+    disable_automerge: bool = os.getenv("DISABLE_AUTOMERGE", "false").lower() == "true"
+    force_autonomy_mode: str | None = os.getenv("FORCE_AUTONOMY_MODE")
 
 
 @lru_cache

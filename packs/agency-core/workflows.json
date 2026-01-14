@@ -1,0 +1,9 @@
+{
+  "workflows": [
+    {
+      "id": "weekly_posts",
+      "name": "Weekly posts",
+      "params": {"channel": "instagram"}
+    }
+  ]
+}

@@ -32,6 +32,7 @@
           "id": "industry",
           "type": "choice",
           "required": true,
+          "choices": ["dentist", "real_estate", "agency", "fitness", "retail"],
           "choices": ["dentist", "real_estate", "fitness", "retail"],
           "prompt": {
             "it-IT": "Qual e il tuo settore?",

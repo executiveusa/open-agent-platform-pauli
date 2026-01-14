@@ -1,0 +1,7 @@
+{
+  "layout": {
+    "hero": "leads_overview",
+    "tabs": ["Leads", "Runs", "Insights"]
+  },
+  "quick_actions": ["capture_lead", "nurture_lead"]
+}

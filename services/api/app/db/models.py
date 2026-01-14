@@ -80,6 +80,28 @@ class OrgProfile(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
+class OrgSettings(Base):
+    __tablename__ = "org_settings"
+
+    org_id = Column(Integer, ForeignKey("orgs.id"), primary_key=True)
+    autonomy_mode = Column(String(32), nullable=False, default="tiered")
+    fuck_it_expires_at = Column(DateTime, nullable=True)
+    policy_overrides = Column(Text, nullable=True)
+    branding_json = Column(Text, nullable=True)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class AuditLog(Base):
+    __tablename__ = "audit_logs"
+
+    id = Column(Integer, primary_key=True)
+    org_id = Column(Integer, ForeignKey("orgs.id"), nullable=False)
+    actor = Column(String(128), nullable=False)
+    action = Column(String(128), nullable=False)
+    details_json = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
 class Recommendation(Base):
     __tablename__ = "recommendations"
 
@@ -87,6 +109,25 @@ class Recommendation(Base):
     org_id = Column(Integer, ForeignKey("orgs.id"), nullable=False)
     rec_json = Column(Text, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class MarketplacePack(Base):
+    __tablename__ = "marketplace_packs"
+
+    id = Column(Integer, primary_key=True)
+    pack_id = Column(String(128), nullable=False)
+    metadata_json = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class OrgPackInstall(Base):
+    __tablename__ = "org_pack_installs"
+
+    id = Column(Integer, primary_key=True)
+    org_id = Column(Integer, ForeignKey("orgs.id"), nullable=False)
+    pack_id = Column(String(128), nullable=False)
+    status = Column(String(32), nullable=False, default="enabled")
+    installed_at = Column(DateTime, default=datetime.utcnow)
 
 
 class OrgConfig(Base):
@@ -107,6 +148,57 @@ class OrgConfigSnapshot(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     reason = Column(String(128), nullable=False)
     pack_versions = Column(Text, nullable=True)
+    config_checksum = Column(String(64), nullable=True)
+
+
+class TelemetryEvent(Base):
+    __tablename__ = "telemetry_events"
+
+    id = Column(Integer, primary_key=True)
+    org_id = Column(Integer, ForeignKey("orgs.id"), nullable=False)
+    event_type = Column(String(64), nullable=False)
+    pack_ids = Column(Text, nullable=True)
+    payload_json = Column(Text, nullable=True)
+    privacy_json = Column(Text, nullable=True)
+    schema_version = Column(String(16), nullable=False, default="1")
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class PackMetricsDaily(Base):
+    __tablename__ = "pack_metrics_daily"
+
+    id = Column(Integer, primary_key=True)
+    pack_id = Column(String(128), nullable=False)
+    metrics_json = Column(Text, nullable=False)
+    metric_date = Column(DateTime, default=datetime.utcnow)
+
+
+class OrgMetricsDaily(Base):
+    __tablename__ = "org_metrics_daily"
+
+    id = Column(Integer, primary_key=True)
+    org_id = Column(Integer, ForeignKey("orgs.id"), nullable=False)
+    metrics_json = Column(Text, nullable=False)
+    metric_date = Column(DateTime, default=datetime.utcnow)
+
+
+class Experiment(Base):
+    __tablename__ = "experiments"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(128), nullable=False)
+    config_json = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class ExperimentAssignment(Base):
+    __tablename__ = "experiment_assignments"
+
+    id = Column(Integer, primary_key=True)
+    experiment_id = Column(Integer, ForeignKey("experiments.id"), nullable=False)
+    org_id = Column(Integer, ForeignKey("orgs.id"), nullable=False)
+    assignment = Column(String(64), nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
 
 class Run(Base):

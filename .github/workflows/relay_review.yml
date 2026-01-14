@@ -1,0 +1,12 @@
+name: Relay Review
+
+on:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  review:
+    if: contains(github.event.pull_request.labels.*.name, relay:pr)
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Codex review placeholder" 

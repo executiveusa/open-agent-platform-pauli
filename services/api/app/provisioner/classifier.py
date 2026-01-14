@@ -10,6 +10,16 @@ class PackSelectionResult:
 RULES = {
     "industry": {
         "dentist": "dentist-core",
+        "real_estate": "real-estate-core",
+        "agency": "agency-core",
+    },
+    "primary_goal": {
+        "bookings": "bookings-growth",
+        "leads": "leads-growth",
+    },
+    "primary_channel": {
+        "whatsapp": "whatsapp-first",
+        "instagram": "instagram-first",
     },
     "primary_goal": {
         "bookings": "bookings-growth",

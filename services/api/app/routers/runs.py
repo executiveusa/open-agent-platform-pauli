@@ -61,6 +61,14 @@ async def create_run(
     db: Session = Depends(get_db),
 ) -> RunResponse:
     rate_limiter.check(request)
+    settings = get_settings()
+    if settings.disable_agent_runs:
+        from fastapi import HTTPException, status
+
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Agent runs disabled by kill switch",
+        )
     profile = db.query(OrgProfile).first()
     if profile is None or profile.onboarding_stage < 1:
         from fastapi import HTTPException, status

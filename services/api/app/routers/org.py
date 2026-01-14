@@ -59,6 +59,7 @@ async def list_snapshots(
                 "config_json": snap.config_json,
                 "reason": snap.reason,
                 "pack_versions": snap.pack_versions,
+                "config_checksum": snap.config_checksum,
             }
             for snap in snapshots
         ]

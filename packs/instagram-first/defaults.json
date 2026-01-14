@@ -1,0 +1,7 @@
+{
+  "layout": {
+    "hero": "instagram_control",
+    "tabs": ["Studio", "Runs", "Templates"]
+  },
+  "quick_actions": ["schedule_post", "reply_comments"]
+}

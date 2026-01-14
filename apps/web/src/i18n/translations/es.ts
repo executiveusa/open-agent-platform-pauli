@@ -6,6 +6,9 @@ export const es = {
     rag: "RAG",
     runs: "Ejecuciones",
     jarvis: "Jarvis",
+    marketplace: "Marketplace",
+    insights: "Insights",
+    admin: "Admin",
   },
   runs: {
     title: "Ejecuciones",

@@ -1,0 +1,7 @@
+{
+  "layout": {
+    "hero": "real_estate_overview",
+    "tabs": ["Listings", "Runs", "Insights", "Compliance"]
+  },
+  "quick_actions": ["post_listing", "follow_up_leads"]
+}

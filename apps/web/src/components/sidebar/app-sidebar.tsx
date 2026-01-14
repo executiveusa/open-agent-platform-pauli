@@ -60,6 +60,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         url: "/jarvis",
         icon: Sparkles,
       },
+      {
+        title: dictionary.nav.marketplace,
+        url: "/marketplace",
+        icon: Sparkles,
+      },
+      {
+        title: dictionary.nav.insights,
+        url: "/insights",
+        icon: Activity,
+      },
+      {
+        title: dictionary.nav.admin,
+        url: "/admin",
+        icon: Bot,
+      },
     ],
   };
   return (

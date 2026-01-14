@@ -2,6 +2,7 @@ from app.provisioner.merge import merge_configs
 
 
 def test_merge_deterministic() -> None:
+    base_defaults = {"layout": {"tabs": ["Base"]}, "quick_actions": ["q0"]}
     packs = [
         {
             "pack_json": {"id": "b", "version": "1.0.0"},
@@ -16,6 +17,8 @@ def test_merge_deterministic() -> None:
             "policies_json": {"restricted_actions": ["x"]},
         },
     ]
+    first = merge_configs(base_defaults, packs)
+    second = merge_configs(base_defaults, list(reversed(packs)))
     first = merge_configs(packs)
     second = merge_configs(list(reversed(packs)))
     assert first == second

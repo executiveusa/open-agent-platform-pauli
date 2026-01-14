@@ -5,6 +5,17 @@ from .db.models import Base
 from .db.session import engine
 from .db.models import Org, OrgProfile
 from .db.session import SessionLocal
+from .routers import (
+    runs,
+    onboarding,
+    org,
+    packs,
+    setup,
+    provision,
+    org_settings,
+    marketplace,
+    telemetry,
+)
 from .routers import runs, onboarding, org, packs, setup, provision
 
 
@@ -44,6 +55,9 @@ app.include_router(org.router)
 app.include_router(packs.router)
 app.include_router(setup.router)
 app.include_router(provision.router)
+app.include_router(org_settings.router)
+app.include_router(marketplace.router)
+app.include_router(telemetry.router)
 
 
 @app.get("/api/health")

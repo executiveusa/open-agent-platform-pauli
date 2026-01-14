@@ -6,6 +6,9 @@ export const itIT = {
     rag: "RAG",
     runs: "Esecuzioni",
     jarvis: "Jarvis",
+    marketplace: "Marketplace",
+    insights: "Insight",
+    admin: "Admin",
   },
   runs: {
     title: "Esecuzioni",

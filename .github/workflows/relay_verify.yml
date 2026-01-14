@@ -1,0 +1,13 @@
+name: Relay Verify
+
+on:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  verify:
+    if: contains(github.event.pull_request.labels.*.name, relay:pr)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Run lint/build/tests here" 

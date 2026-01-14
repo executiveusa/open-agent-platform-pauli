@@ -6,6 +6,9 @@ export const esMX = {
     rag: "RAG",
     runs: "Ejecuciones",
     jarvis: "Jarvis",
+    marketplace: "Marketplace",
+    insights: "Insights",
+    admin: "Admin",
   },
   runs: {
     title: "Ejecuciones",

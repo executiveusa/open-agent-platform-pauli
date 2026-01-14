@@ -1,0 +1,12 @@
+name: Relay Implement
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  implement:
+    if: github.event.label.name == relay:planned
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Relay implementation step placeholder" 

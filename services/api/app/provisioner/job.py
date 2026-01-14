@@ -1,4 +1,7 @@
 import json
+import hashlib
+from datetime import datetime
+from pathlib import Path
 from datetime import datetime
 from sqlalchemy.orm import Session
 from ..packs.registry import registry
@@ -9,6 +12,8 @@ from ..orchestration.events import broker
 
 def run_provisioner(db: Session, org_id: int, selected_packs: list[str]) -> dict[str, str]:
     registry.load()
+    base_defaults_path = Path(__file__).resolve().parents[4] / "config" / "packs" / "base-defaults.json"
+    base_defaults = json.loads(base_defaults_path.read_text())
     packs = []
     for pack_id in selected_packs:
         pack = registry.get(pack_id)
@@ -21,6 +26,11 @@ def run_provisioner(db: Session, org_id: int, selected_packs: list[str]) -> dict
                     "policies_json": pack.policies_json,
                 }
             )
+    type_order = {"industry": 0, "goal": 1, "channel": 2}
+    ordered_packs = sorted(
+        packs, key=lambda item: type_order.get(item["pack_json"].get("type", ""), 99)
+    )
+    config = merge_configs(base_defaults, ordered_packs)
     config = merge_configs(packs)
     org_config = db.query(OrgConfig).filter(OrgConfig.org_id == org_id).first()
     if org_config is None:
@@ -28,12 +38,14 @@ def run_provisioner(db: Session, org_id: int, selected_packs: list[str]) -> dict
         db.add(org_config)
     else:
         org_config.active_config_json = json.dumps(config)
+    checksum = hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest()
     snapshot = OrgConfigSnapshot(
         org_id=org_id,
         snapshot_id=f"snap-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}",
         config_json=json.dumps(config),
         reason="provisioner",
         pack_versions=json.dumps(config.get("pack_versions", {})),
+        config_checksum=checksum,
     )
     db.add(snapshot)
     recommendation = Recommendation(
