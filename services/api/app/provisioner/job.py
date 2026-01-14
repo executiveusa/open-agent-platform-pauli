@@ -2,6 +2,7 @@ import json
 import hashlib
 from datetime import datetime
 from pathlib import Path
+from datetime import datetime
 from sqlalchemy.orm import Session
 from ..packs.registry import registry
 from .merge import merge_configs
@@ -30,6 +31,7 @@ def run_provisioner(db: Session, org_id: int, selected_packs: list[str]) -> dict
         packs, key=lambda item: type_order.get(item["pack_json"].get("type", ""), 99)
     )
     config = merge_configs(base_defaults, ordered_packs)
+    config = merge_configs(packs)
     org_config = db.query(OrgConfig).filter(OrgConfig.org_id == org_id).first()
     if org_config is None:
         org_config = OrgConfig(org_id=org_id, active_config_json=json.dumps(config))

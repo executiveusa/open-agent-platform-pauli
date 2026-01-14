@@ -19,4 +19,6 @@ def test_merge_deterministic() -> None:
     ]
     first = merge_configs(base_defaults, packs)
     second = merge_configs(base_defaults, list(reversed(packs)))
+    first = merge_configs(packs)
+    second = merge_configs(list(reversed(packs)))
     assert first == second

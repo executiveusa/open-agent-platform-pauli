@@ -21,6 +21,12 @@ RULES = {
         "whatsapp": "whatsapp-first",
         "instagram": "instagram-first",
     },
+    "primary_goal": {
+        "bookings": "bookings-growth",
+    },
+    "primary_channel": {
+        "whatsapp": "whatsapp-first",
+    },
 }
 
 

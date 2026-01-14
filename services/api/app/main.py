@@ -16,6 +16,7 @@ from .routers import (
     marketplace,
     telemetry,
 )
+from .routers import runs, onboarding, org, packs, setup, provision
 
 
 settings = get_settings()
