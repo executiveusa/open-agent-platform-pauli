@@ -1,0 +1,26 @@
+# open-agent-platform-pauli.llm.txt
+# Machine-readable context for AI agents and LLMs
+
+## IDENTITY
+name: open-agent-platform-pauli
+codename: OAP
+primary_agent: Open Agent Platform (No-Code Agent Builder)
+org: executiveusa
+repo: https://github.com/executiveusa/open-agent-platform-pauli
+
+## ROLE
+No-code agent builder. Allows users to create, configure, and deploy agents
+without writing code using LangGraph workflows and Supabase authentication.
+
+## TECH STACK
+- Next.js, React, LangGraph, Supabase Auth
+- Fork of LangChain's open-agent-platform
+- Pre-built: Tools Agent, Supervisor Agent, Deep Research Agent
+
+## HIERARCHY
+archon-os > Agent Zero > Devika (Lead Delegator) > Open Agent Platform
+
+## INSTRUCTIONS FOR AI AGENTS
+1. This platform serves non-technical users
+2. All agents created here must follow AGENT_PROTOCOL.md
+3. Report to Devika with platform usage metrics
