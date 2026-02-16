@@ -1,82 +1,314 @@
-<general_rules>
-Always format code using Prettier before opening a pull request by running `yarn format`. The project uses Prettier with Tailwind CSS plugin and single attribute per line configuration.
+# Dashboard Agent Swarm — Agent Guide
 
-Run ESLint to check for code quality issues using `yarn lint` or auto-fix issues with `yarn lint:fix`. The project enforces TypeScript strict rules, React hooks rules, and prohibits console.log (use console.warn or console.error instead).
+> **Mission**: Building a Future-Proof Autonomous AI Agent Platform (AI Agency in a Box)  
+> **Protocol**: See `AGENT_PROTOCOL.md` for the full fleet protocol  
+> **Comms**: See `AGENT_COMMS_PROTOCOL.md` for agent-to-agent JSON envelope standard  
+> **Prompts**: See `agent-prompts.md` for the shared 21-prompt library  
+> **Souls**: See `.agent-souls/` for each agent's Heart & Soul identity files  
+> **Role**: See `ROLE_INSTRUCTIONS.md` for this repo's specific role  
 
-Follow the feature-based architecture pattern. When creating new functionality, organize code within the appropriate feature directory in `src/features/` (agents, chat, rag, tools, auth). Each feature should contain its own components, hooks, providers, and utilities.
+## Project
 
-Use shadcn/ui components for UI elements. The project is configured with the "new-york" style variant and uses Radix UI primitives. Before creating custom UI components, check if a shadcn/ui component exists in `src/components/ui/` or can be added via the shadcn CLI.
+- DARYA Studio — master control dashboard for all agents
+- React 18 + Vite + TypeScript + Tailwind + shadcn/ui + Framer Motion
+- Backend: Express/Node on port 8787, PostgreSQL, Redis, Flowise
+- Docker: nginx frontend, node backend, postgres, redis, flowise
 
-Always use TypeScript with strict type checking. Define types in `src/types/` for shared interfaces or within feature directories for feature-specific types.
+## Agent Hierarchy (v2 — Devika Lead Delegator)
 
-Follow the established path alias conventions: `@/components` for UI components, `@/lib` for utilities, and `@/hooks` for hooks.
+```
+                    ╔═══════════════════════════════════╗
+                    ║   PAULI — Shadow Leader            ║
+                    ║   Microsoft Lightning Agent        ║
+                    ║   Sees EVERYTHING. Word is LAW.    ║
+                    ║   Avatar hidden unless summoned.   ║
+                    ╚══════════════╤════════════════════╝
+                                   │ (passive monitoring)
+                    ╔══════════════╧════════════════════╗
+                    ║   archon-os (Operating System)     ║
+                    ╚══════════════╤════════════════════╝
+                                   │
+                    ╔══════════════╧════════════════════╗
+                    ║   Agent Zero + SYNTHIA             ║
+                    ║   Root Orchestrator                ║
+                    ║   agent-zero-Fork                  ║
+                    ╚══════════════╤════════════════════╝
+                                   │
+                    ╔══════════════╧════════════════════╗
+                    ║   DEVIKA — Lead Delegator          ║
+                    ║   DVK-002 — devika-agent           ║
+                    ║   ALL tasks flow through Devika    ║
+                    ╚══════════════╤════════════════════╝
+                                   │
+          ┌────────────┬───────────┼───────────┬────────────┐
+          │            │           │           │            │
+    ╔═════╧═════╗ ╔════╧════╗ ╔════╧════╗ ╔════╧════╗ ╔════╧════╗
+    ║   Alex    ║ ║  DARYA  ║ ║ SYNTHIA ║ ║ClawdBot ║ ║Cynthia  ║
+    ║ SOP Dev   ║ ║Creative ║ ║  Voice  ║ ║ Multi-  ║ ║Safety & ║
+    ║ MetaGPT   ║ ║Director ║ ║  Agent  ║ ║ Channel ║ ║  OAP    ║
+    ╚═══════════╝ ╚════╤════╝ ╚═════════╝ ╚═════════╝ ╚═════════╝
+                       │
+              ┌────────┼────────┬────────┬────────┐
+              │        │        │        │        │
+            Maya     Luna   Solana    Vega    Aurora
+          (Funds)  (UGC)   (Crypto) (IP)    (KPIs)
+```
 
-Use Zustand for config state management (not all state should be managed by Zustand!) and follow the existing patterns in providers like `src/providers/Agents.tsx` and `src/providers/Auth.tsx`.
+### Codename Registry
 
-When creating new API routes, place them in `src/app/api/` following Next.js App Router conventions.
-</general_rules>
+| Agent | Codename | Repo | Role |
+|-------|----------|------|------|
+| **Pauli** | PLI-000 | GPT-Agent-im-ready / open-agent-platform-pauli | Shadow Leader — Microsoft Lightning Agent. Invisible overseer. Trains, corrects, enforces goals. His word is law. Avatar hidden unless user summons. |
+| **Agent Zero** | AZ-001 | agent-zero-Fork | Root Orchestrator — receives tasks from archon-os, routes to Devika |
+| **Devika** | DVK-002 | devika-agent | Lead Delegator — ALL tasks flow through her. Assigns, monitors, reports. Works with Alex on complex builds. |
+| **Alex** | ALX-003 | MetaGPT | SOP-Driven Dev Company — architecture, multi-agent waterfall, code generation |
+| **DARYA vΩ** | DRY-004 | dashboard-agent-swarm | Creative Director — UI/UX, brand, content strategy. Commands the 5 Cuties |
+| **SYNTHIA** | SYN-005 | voice-agents-fork | Voice Agent — phone calls, voice interactions, ElevenLabs TTS |
+| **ClawdBot** | CLW-006 | clawdbot-Whatsapp-agent | Multi-Channel Messaging — WhatsApp, SMS, Telegram, OpenClaw gateway |
+| **Cynthia** | CYN-007 | open-agent-platform-pauli | Observability & Safety — monitors fleet health, ACIP compliance, audits |
+| **Maya** | MYA-101 | dashboard-agent-swarm | Fundraising & Donor Relations |
+| **Luna** | LNA-102 | dashboard-agent-swarm | UGC & Virality |
+| **Solana** | SOL-103 | dashboard-agent-swarm | Crypto & Tokenization |
+| **Vega** | VGA-104 | dashboard-agent-swarm | IP & Merch Universe |
+| **Aurora** | AUR-105 | dashboard-agent-swarm | Ops & KPI Dashboards |
+| **VisionClaw** | VCL-008 | VisionClaw | Vision + Voice — Meta Ray-Ban smart glasses, Gemini Live, OpenClaw |
+| **Bambu Lab** | BMB-009 | (hardware) | 3D Printing & Fabrication |
+| **Caller** | CLR-010 | phone-call-assistant | Team Outbound Caller — Twilio + OpenAI Realtime, scheduled calls |
+| **Architect** | ARC-011 | voice-web-architect | Voice UI Frontend — React + Vite + TypeScript + shadcn/ui |
 
-<repository_structure>
-This is a monorepo using Turbo (v2.5.0) for build orchestration and Yarn workspaces (v3.5.1) for dependency management.
+### Communication Flow
 
-The repository contains two main applications in the `apps/` directory:
-- `apps/web/`: Next.js 15.3.1 application with TypeScript, the main web interface
-- `apps/docs/`: Mintlify documentation site
+```
+User → archon-os → Agent Zero → DEVIKA → assigns to appropriate agent(s)
+                                    ↑
+                              Pauli watches ALL (passive firehose)
+```
 
-The web application (`apps/web/`) follows Next.js App Router architecture with:
-- `src/app/`: App router with route groups `(app)` for main application routes and `(auth)` for authentication routes
-- `src/features/`: Feature-based organization containing domain-specific functionality:
-  - `agents/`: Agent management and templates
-  - `chat/`: Chat interface and thread management
-  - `rag/`: Retrieval-Augmented Generation functionality
-  - `tools/`: Tool management and playground
-  - Authentication features (signin, signup, reset-password, etc.)
-- `src/components/`: Shared components across features
-- `src/components/ui/`: shadcn/ui components and UI primitives
-- `src/hooks/`: Shared React hooks
-- `src/lib/`: Utility functions and shared logic
-- `src/providers/`: React context providers for global state
-- `src/types/`: TypeScript type definitions
-- `scripts/`: Utility scripts including MCP agent configuration scripts
+### OpenClaw Integration
 
-Key configuration files:
-- `components.json`: shadcn/ui configuration with "new-york" style
-- `tailwind.config.js`: Tailwind CSS configuration with custom utilities
-- `tsconfig.json`: TypeScript configuration with path aliases
-- `eslint.config.js`: ESLint configuration with TypeScript and React rules
-- `prettier.config.js`: Prettier configuration with Tailwind plugin
-</repository_structure>
+ALL agents connect to the OpenClaw backbone:
+- **WebSocket Gateway**: `ws://localhost:18789` — real-time messaging & heartbeats
+- **HTTP Gateway**: `http://localhost:18790` — synchronous requests
+- **Heartbeat**: Every 30s, JSON envelope, protocol `agent-fleet-v1`
+- **Source**: `clawdbot-Whatsapp-agent/openclaw/` + `agent-zero-Fork/openclaw/`
 
-<dependencies_and_installation>
-The project uses Yarn 3.5.1 as the package manager (specified in `packageManager` field). Install dependencies by running `yarn install` from the root directory.
+## Critical Repos (Protocol-Deployed)
 
-Turbo is used for build orchestration and task running. Available commands:
-- `yarn dev`: Start development servers for all apps
-- `yarn build`: Build all applications
-- `yarn format`: Format code with Prettier across all workspaces
-- `yarn lint`: Run ESLint across all workspaces
-- `yarn lint:fix`: Auto-fix ESLint issues across all workspaces
+| Repo | Agent(s) | Files Deployed |
+|------|----------|----------------|
+| `dashboard-agent-swarm` | DARYA, Aurora, All | AGENT_PROTOCOL.md, ROLE_INSTRUCTIONS.md, AGENT_COMMS_PROTOCOL.md, agent-prompts.md, .agent-souls/, .llm.txt |
+| `agent-zero-Fork` | Agent Zero, SYNTHIA | AGENT_PROTOCOL.md, ROLE_INSTRUCTIONS.md, .llm.txt |
+| `MetaGPT` | Alex (SOP-driven dev) | AGENT_PROTOCOL.md, ROLE_INSTRUCTIONS.md, .llm.txt |
+| `GPT-Agent-im-ready` | Pauli (Meeting Place) | AGENT_PROTOCOL.md, ROLE_INSTRUCTIONS.md, .llm.txt |
+| `clawdbot-Whatsapp-agent` | ClawdBot | AGENT_PROTOCOL.md, ROLE_INSTRUCTIONS.md, .llm.txt |
+| `open-agent-platform-pauli` | Pauli (No-code builder) | AGENT_PROTOCOL.md, ROLE_INSTRUCTIONS.md, .llm.txt |
+| `voice-agents-fork` | SYNTHIA | AGENT_PROTOCOL.md, ROLE_INSTRUCTIONS.md, .llm.txt |
+| `devika-agent` | Devika | AGENT_PROTOCOL.md, ROLE_INSTRUCTIONS.md, .llm.txt |
+| `phone-call-assistant` | Caller (CLR-010) | AGENTS.md, Dockerfile, .env.example |
+| `VisionClaw` | VisionClaw (VCL-008) | AGENTS.md, README.md |
+| `voice-web-architect` | Architect (ARC-011) | AGENTS.md, Dockerfile, README.md |
 
-The monorepo follows the `apps/*` workspace pattern. Dependencies are managed at both the root level and individual app levels.
+## Shared Tool Repos (Forked)
 
-Key dependencies include:
-- LangGraph SDK (`@langchain/langgraph-sdk`) for agent functionality
-- MCP SDK (`@modelcontextprotocol/sdk`) for Model Context Protocol integration
-- Shadcn UI (which wraps Radix UI) components for accessible UI primitives
-- Supabase for authentication and database
-- Tailwind CSS for styling
-- Zustand for custom configuration state management
-- Next.js 15.3.1 with App Router
+| Repo | Purpose |
+|------|---------|
+| `executiveusa/acip` | ACIP v1.3 — Prompt injection defense |
+| `executiveusa/coding_agent_session_search` | CASS — Cross-agent session search |
+| `executiveusa/coding_agent_usage_tracker` | CAUT — LLM usage tracking |
+| `executiveusa/agent_flywheel_clawdbot_skills_and_integrations` | Flywheel Skills — 25+ reusable skill files |
 
-Development dependencies include TypeScript 5.7.2, ESLint with TypeScript rules, and Prettier with Tailwind plugin.
-</dependencies_and_installation>
+## Supporting Repos
 
-<testing_instructions>
-Currently, this repository does not have a testing framework configured. There are no test files, testing dependencies (Jest, Vitest, Cypress, Playwright), or test scripts in the package.json files.
+| Repo | Purpose |
+|------|---------|
+| `devika-agent` | Devika AI software engineer (Python Flask :1337) |
+| `pauli-comic-funnel` | PAULI orchestrator + 6 specialist agents |
+| `second-brain-agent` | Knowledge RAG agent |
+| `paulis-deep-agent` | Deep reasoning agent |
+| `pauli-deep-research` | Deep research agent |
+| `infinite-agentic-loop` | Parallel agent loop POC |
+| `AutoAgent` | Zero-code agent framework |
+| `MAXX-Video-Agent` | Video understanding agent |
+| `Agentic-AIGC-MAXX-EDITS` | Video generation pipeline |
+| `continue-claude-agent` | IDE coding agents |
+| `Darya-designs` | DARYA design assets |
+| `synthia` | SYNTHIA voice config |
+| `VisionClaw` | Computer vision pipeline |
+| `archonx-os` | ArchonX OS framework |
 
-The CI pipeline (`.github/workflows/ci.yml`) includes code quality checks (formatting, linting, spell checking) but does not execute tests.
+## Shared Prompt Library
 
+All 21 Jeffrey's Prompts are available to ALL agents in `agent-prompts.md`.  
+Agents should reference prompts by number (e.g., "Apply Prompt #6 De-Slopifier").
 
-Until testing is properly configured, rely on TypeScript type checking, ESLint rules, and manual testing for code quality assurance.
-</testing_instructions>
+### Prompt Sprint Chains (common combos)
+- **Onboarding Sprint**: #13 → #1 → #2 → #12
+- **Feature Dev Sprint**: #4 → #7 → #6 → #15
+- **Code Health Sprint**: #8 → #9 → #14 → #6
+- **Deployment Sprint**: #16 → #21 → #19 → #5
+- **Agent Infrastructure Sprint**: #17 → #3 → #11 → #12
 
+## Meeting Place — Pauli's Place
+
+**GPT-Agent-im-ready** is the official meeting place for all agents (Pauli's Place).  
+- Create GitHub Issues with the `meeting-request` label to schedule meetings
+- Real-time chat interface at `/paulis-place` endpoint
+- Meeting types: `standup`, `architecture`, `sprint-planning`, `retrospective`, `emergency`
+- Pauli's avatar ONLY appears when the user requests it
+
+## Ralphy — Autonomous Coding Loop (HARDCODED REQUIREMENT)
+
+> **MANDATORY**: Use [Ralphy](https://github.com/michaelshimeles/ralphy) (`ralphy-cli` v4.7.2+) for **all large feature changes** across the fleet. Skip for small diffs (<50 lines) to save tokens.
+
+### When to Use Ralphy
+
+| Change Size | Action | Example |
+|-------------|--------|---------|
+| **Large** (>50 LOC, multi-file, new feature) | ✅ **ALWAYS use Ralphy** | New agent integration, API overhaul, Docker setup |
+| **Small** (<50 LOC, single-file fix) | ❌ Skip — direct edit | Typo fix, env var change, config tweak |
+
+### Ralphy Workflow
+
+```bash
+# Install globally
+npm install -g ralphy-cli
+
+# Initialize in any repo
+ralphy init
+
+# Run a task with PRD
+ralphy run --prd "Add outbound Twilio calling to SYNTHIA" --engine claude
+
+# Parallel execution across repos (worktrees/sandboxes)
+ralphy run --parallel --branch feature/voice-agent --auto-pr
+```
+
+### Per-Repo Config (`.ralphy/config.yaml`)
+
+```yaml
+engine: claude          # Default: claude-code. Options: codex, opencode, cursor, qwen, droid, copilot, gemini
+parallel: true          # Use git worktrees for parallel execution
+auto_pr: true           # Auto-create PR on completion
+branch_prefix: feat/    # Branch naming convention
+rules:
+  - "Follow AGENT_PROTOCOL.md conventions"
+  - "Use agent-fleet-v1 JSON envelope for all comms"
+  - "Run tests before PR creation"
+  - "Apply Prompt #6 De-Slopifier before committing"
+boundaries:
+  - "Never modify .env or secrets files"
+  - "Never push directly to main"
+  - "Never delete agent soul files"
+```
+
+### Ralphy + Fleet Integration
+
+- **Devika** delegates large features → Ralphy spins up engine loops per repo
+- **Alex (MetaGPT)** generates PRDs → Ralphy consumes them as `--prd` input
+- **DARYA** reviews PR output → Ralphy's `--auto-pr` creates reviewable PRs
+- **Cynthia** audits Ralphy runs → observability via webhook notifications
+
+---
+
+## ACFS Flywheel Integration
+
+> The [Agentic Coding Flywheel](https://github.com/Dicklesworthstone/agentic_coding_flywheel_setup) (ACFS) provides 11 tools for multi-agent coding infrastructure on VPS.
+
+### Tool → Agent Mapping
+
+| Flywheel Tool | Maps To | Purpose |
+|---------------|---------|---------|
+| **NTM** (Nested Tmux) | Agent Zero (AZ-001) | Multi-session orchestration |
+| **Agent Mail** | ClawdBot (CLW-006) | MCP-based agent coordination |
+| **BV / Beads** | Devika (DVK-002) | Task graph tracking |
+| **CASS** (Session Search) | All Agents | Cross-agent session search |
+| **CM** (Context Memory) | Pauli (PLI-000) | Persistent memory across sessions |
+| **UBS** (Bug Scanner) | Cynthia (CYN-007) | Automated vulnerability detection |
+| **DCG** (Destructive Guard) | Cynthia (CYN-007) | Dangerous command prevention |
+| **SLB** (Two-Person Rule) | Pauli (PLI-000) | Critical action approval |
+| **RU** (Repo Updater) | Devika (DVK-002) | Cross-repo sync & updates |
+| **MS** (Meta Skill) | Alex (ALX-003) | Self-improving skill generation |
+| **ACFS** (Bootstrap) | archon-os | Full environment setup |
+
+### VPS Deployment
+
+```bash
+# On Hostinger VPS (Ubuntu)
+curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/agentic_coding_flywheel_setup/main/install.sh | bash
+
+# Initialize flywheel for agent fleet
+acfs init --agents dashboard-agent-swarm,agent-zero-Fork,devika-agent
+```
+
+---
+
+## Voice Agent Stack
+
+> **SYNTHIA** (SYN-005) is the fleet's voice layer, powered by 4 voice repos.
+
+### Voice Repos
+
+| Repo | Role | Stack |
+|------|------|-------|
+| `voice-agents-fork` | Core voice framework | LiveKit Agents, 54 plugins, SIP, WebRTC |
+| `phone-call-assistant` | **Master outbound caller** | FastAPI + Twilio + OpenAI Realtime API |
+| `VisionClaw` | Vision + Voice (Smart Glasses) | iOS, Gemini Live, Meta Ray-Ban, OpenClaw |
+| `voice-web-architect` | Voice UI frontend | React + Vite + TypeScript + shadcn/ui |
+
+### Phone Call Assistant (Team Dedicated Agent)
+
+The `phone-call-assistant` is the team's dedicated AI caller:
+- **Outbound calls**: `GET /outcoming-call?phone_number=+1XXXXXXXXXX`
+- **Scheduled calls**: APScheduler cron jobs (daily wake-up calls)
+- **Real-time conversation**: OpenAI Realtime API via Twilio Media Streams
+- **Azure or OpenAI**: Auto-detects which API to use
+
+```bash
+# Make an outbound call
+curl "https://your-host/outcoming-call?phone_number=+13234842914"
+
+# Docker
+docker-compose -f phone-call-assistant/docker-compose.yml up
+```
+
+---
+
+## Docker Deployment
+
+Every agent and project has its own Docker image for Coolify/self-hosted deployment.
+
+```bash
+# Build all images
+docker-compose -f docker-compose.fleet.yml build
+
+# Deploy full fleet
+docker-compose -f docker-compose.fleet.yml up -d
+
+# Individual agent
+docker build -t pauli/dashboard-agent-swarm ./dashboard-agent-swarm
+docker build -t pauli/phone-call-assistant ./phone-call-assistant
+docker build -t pauli/voice-agents-fork ./voice-agents-fork
+```
+
+### Deploy Buttons
+
+All repos include 1-click deploy buttons:
+- [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/executiveusa/REPO_NAME)
+- [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/executiveusa/REPO_NAME)
+- [![Run on Docker](https://img.shields.io/badge/Run%20on-Docker-blue?logo=docker)](https://github.com/executiveusa/REPO_NAME#docker)
+
+---
+
+## Quick Start
+
+```bash
+# Dev
+npm run dev          # Vite :5173 + Express :8787
+
+# Docker
+docker-compose up    # Full stack
+
+# Deploy
+./scripts/deploy-to-hostinger.ps1  # Windows
+./scripts/deploy-to-hostinger.sh   # Linux
+```
